@@ -1,0 +1,7 @@
+/text_files/
+/pdfs/
+/venv/
+/.idea/
+/lance.db/
+/tools/__pycache__/
+/agents/__pycache__/
