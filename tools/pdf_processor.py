@@ -42,11 +42,7 @@ def create_temporary_file_from_text(pdf_content_text: str):
     """
     # Generate a random file name
     file_name = f"./text_files/{uuid.uuid4().hex}.txt"
-
     pdf_content_text = pdf_content_text.replace("●", "-").replace("•", "-")
-
-    print(f'PDF content: {pdf_content_text}')
-
     # Create and write to the file
     with open(file_name, "w", encoding="utf-8") as file:
         file.write(pdf_content_text)
