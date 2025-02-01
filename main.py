@@ -5,15 +5,20 @@ from phi.agent import Agent
 from phi.vectordb.lancedb import LanceDb
 from phi.vectordb.search import SearchType
 from agents.knowledge_agent import KnowledgeBaseManager
+from tools.get_info import get_info
+from tools.transformer import transformer
 
 if __name__ == '__main__':
-    knowledge_base_manager = KnowledgeBaseManager(source="./pdfs/Leon Adeoye Resume.pdf", debug_mode=True)
+    get_info()
+    transformer()
+
+    knowledge_base_manager = KnowledgeBaseManager(source="./pdfs/resume.pdf", debug_mode=False)
     agent_team = Agent(
         name="Agent Team",
         model=OpenAIChat(id="gpt-3.5-turbo"),
         team=[knowledge_base_manager.get_agent()],
     )
-    agent_team.print_response("Extract details from the text knowledge base and use it to summarize what is in the knowledge base", stream=True)
+    agent_team.print_response("I have uploaded a resume of a candidate into a knowledge base. Extract details from the knowledge base and tell me as much as possible about the candidate", stream=True)
 
     knowledge_base = TextKnowledgeBase(
         path="./text_files/leon.txt",
@@ -25,17 +30,17 @@ if __name__ == '__main__':
         ),
     )
 
-    knowledge_base.load(recreate=True)
+    knowledge_base.load()
 
     agent = Agent(
         name="My Agent",
         model=OpenAIChat(id="gpt-3.5-turbo"),
         knowledge_base=knowledge_base,
         search_knowledge=True,
-        debug_mode=True,
+        debug_mode=False
     )
 
-    agent.print_response("Tell something about Leon Adeoye using the Knowledge base")
+    agent.print_response("I have uploaded Leon Adeoye's resume which has information about Leon's technical skills, previous workplaces, etc. Tell me as much as you can about Leon Adeoye has using the Knowledge base")
 
 
 

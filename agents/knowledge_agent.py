@@ -4,7 +4,8 @@ from phi.agent import Agent
 from phi.vectordb.lancedb import LanceDb, SearchType
 from phi.embedder.openai import OpenAIEmbedder
 from phi.model.base import Model
-from tools.pdf_processor import extract_text_from_pdf_using_pdfminer, delete_temporary_file, create_temporary_file_from_text
+from tools.pdf_processor import extract_text_from_pdf_using_pymupdf, delete_temporary_file, \
+    create_temporary_file_from_text, extract_text_from_pdf_using_pdfminer
 
 
 class KnowledgeBaseManager:
@@ -29,6 +30,7 @@ class KnowledgeBaseManager:
 
     def _create_knowledge_base(self):
         """Create the appropriate knowledge base depending on the `use_url` flag."""
+
         file_name = create_temporary_file_from_text(extract_text_from_pdf_using_pdfminer(self.source))
         self.knowledge_base = TextKnowledgeBase(
             name="Knowledge Base", path=file_name, vector_db=self.vector_db

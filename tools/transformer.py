@@ -1,7 +1,6 @@
+from transformers import pipeline
 
 def transformer():
-    from transformers import pipeline
-
     # Load MiniLM
     qa_pipeline = pipeline(
         "question-answering",

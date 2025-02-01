@@ -1,19 +1,7 @@
-from pdfminer.high_level import extract_text
 import pymupdf
 import os
 import uuid
-
-
-def extract_text_from_pdf_using_pdfminer(pdf_path: str) -> str:
-    """Use this function to convert a PDF to text.
-
-    Args:
-        pdf_path (str): The path to the PDF file.
-
-    Returns:
-        str: The text contained in the PDF.
-    """
-    return extract_text(pdf_path)
+from pdfminer.high_level import extract_text
 
 
 def extract_text_from_pdf_using_pymupdf(pdf_path: str) -> str:
@@ -31,6 +19,18 @@ def extract_text_from_pdf_using_pymupdf(pdf_path: str) -> str:
     return text
 
 
+def extract_text_from_pdf_using_pdfminer(pdf_path: str) -> str:
+    """Use this function to convert a PDF to text.
+
+    Args:
+        pdf_path (str): The path to the PDF file.
+
+    Returns:
+        str: The text contained in the PDF.
+    """
+    return extract_text(pdf_path)
+
+
 def create_temporary_file_from_text(pdf_content_text: str):
     """Use this function to create a randomly temporary file from text.
 
@@ -43,10 +43,13 @@ def create_temporary_file_from_text(pdf_content_text: str):
     # Generate a random file name
     file_name = f"./text_files/{uuid.uuid4().hex}.txt"
     pdf_content_text = pdf_content_text.replace("●", "-").replace("•", "-")
+    # Remove all non-UTF-8 characters
+    pdf_content_text = pdf_content_text.encode("utf-8", "ignore").decode("utf-8")
     # Create and write to the file
-    with open(file_name, "w", encoding="utf-8") as file:
+    with open(file_name, "w", encoding="utf-8", errors="ignore") as file:
         file.write(pdf_content_text)
     return file_name
+
 
 
 def delete_temporary_file(file_name: str):
