@@ -39,7 +39,6 @@ class KnowledgeBaseManager:
         delete_temporary_file(file_name)
 
     def get_agent(self) -> Agent:
-        """Create and return the knowledge agent."""
         return Agent(
             name="Knowledge Agent",
             model=self.model,
